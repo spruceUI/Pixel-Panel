@@ -1,5 +1,6 @@
 from PIL import Image, ImageTk
 from lib.gui.context import context
+from lib.spruce import resource_path
 import tkinter as tk
 import tkinter.font as tkfont
 from tkinterdnd2 import TkinterDnD, DND_FILES
@@ -32,8 +33,8 @@ class TerminalCanvas(tk.Canvas):
         height = self.winfo_height()
 
         # Upload and resize Cancel and Confirm images
-        cancel_image = Image.open("res/gui/icon-b.png")
-        confirm_image = Image.open("res/gui/icon-a.png")
+        cancel_image = Image.open(resource_path("res/gui/icon-b.png"))
+        confirm_image = Image.open(resource_path("res/gui/icon-a.png"))
         cancel_image_resized = cancel_image.resize((16, 16))
         confirm_image_resized = confirm_image.resize((16, 16))
 
@@ -245,7 +246,7 @@ class TerminalCanvas(tk.Canvas):
         terminal_canvas.pack(fill="both", expand=True, side="top", pady=2)
 
         # Load and display the logo image
-        logo_image = Image.open("res/gui/terminal_bg.png")
+        logo_image = Image.open(resource_path("res/gui/terminal_bg.png"))
         resized_image = logo_image.resize((155, 155))
 
         root.logo_img = ImageTk.PhotoImage(resized_image)  # Store the reference in root
@@ -274,7 +275,7 @@ def create(container_side="top"):
         terminal_canvas.pack(fill="both", expand=True, side="top", pady=2)
 
     # Load and display the logo image
-    logo_image = Image.open("res/gui/terminal_bg.png")
+    logo_image = Image.open(resource_path("res/gui/terminal_bg.png"))
     resized_image = logo_image.resize((155, 155))
 
     root.logo_img = ImageTk.PhotoImage(resized_image)  # Store the reference in root

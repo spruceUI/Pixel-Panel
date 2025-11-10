@@ -30,6 +30,7 @@ from PIL import Image, ImageTk
 import tkinter.font as tkfont
 import textwrap, os, platform
 from lib.gui.context import context
+from lib.spruce import resource_path
 #import lib.terminal as terminal_func
 import lib.sd_card as sd
 from typing import Callable, Tuple, Any, Optional
@@ -161,7 +162,7 @@ def create_sd_selector(terminal,container_side="top",container_bg="#323232"):
     tk.Label(container_sd, text="TF / SD Card", bg=container_bg, fg="#7c6f64", font=("Arial", 12)).pack(side="left", padx=(12, 5))
 
     # Icon reference
-    root.eject_icon = Image.open("res/gui/eject.png")
+    root.eject_icon = Image.open(resource_path("res/gui/eject.png"))
 
     # Resize images to fit the label
     eject_icon_resized = root.eject_icon.resize((22, 22))
@@ -233,7 +234,7 @@ def on_enter_menu(e, page, widget_page, sel_bg="#ebdbb2"):
     if page != widget_page:
         if not hasattr(e.widget, "original_bg"):
             e.widget.original_bg = e.widget.cget("bg")
-        e.widget.config(bg=sel_bg, cursor="@res/gui/hand.cur")
+        e.widget.config(bg=sel_bg, cursor="@" + resource_path("res/gui/hand.cur"))
 
 def on_leave_menu(e, page, widget_page):
     # Restore original color only if the widget is not selected
@@ -245,7 +246,7 @@ def on_enter(e, sel_bg="#ebdbb2"):
     # Save original attribute to restore on_leave
     if not hasattr(e.widget, "original_bg"):
         e.widget.original_bg = e.widget.cget("bg")
-    e.widget.config(bg=sel_bg, cursor="@res/gui/hand.cur")
+    e.widget.config(bg=sel_bg, cursor="@" + resource_path("res/gui/hand.cur"))
 
 def on_leave(e):
     e.widget.config(bg=e.widget.original_bg)  # Restore original color
@@ -277,15 +278,15 @@ def create_gui(root, app, set_app):
         transparent_color = "systemTransparent"
 
     # Set app icon
-    icon = tk.PhotoImage(file="res/icon.png")
+    icon = tk.PhotoImage(file=resource_path("res/icon.png"))
     root.iconphoto(False, icon)
 
     # Keep references to images to avoid garbage collection
     root.device_image_path = "res/devices/miyooa30.png"
-    root.device_image = tk.PhotoImage(file=root.device_image_path)
-    root.settings_image = tk.PhotoImage(file="res/apps/settings-uns.png")
-    root.sd_image = tk.PhotoImage(file="res/apps/sd.png")
-    root.connect_image = tk.PhotoImage(file="res/apps/connect.png")
+    root.device_image = tk.PhotoImage(file=resource_path(root.device_image_path))
+    root.settings_image = tk.PhotoImage(file=resource_path("res/apps/settings-uns.png"))
+    root.sd_image = tk.PhotoImage(file=resource_path("res/apps/sd.png"))
+    root.connect_image = tk.PhotoImage(file=resource_path("res/apps/connect.png"))
 
     # Variables for tracking the position
     drag_start_x = 0
@@ -295,7 +296,7 @@ def create_gui(root, app, set_app):
         nonlocal drag_start_x, drag_start_y
         drag_start_x = event.x_root
         drag_start_y = event.y_root
-        event.widget.config(cursor="@res/gui/handGrab.cur")
+        event.widget.config(cursor="@" + resource_path("res/gui/handGrab.cur"))
 
     def on_drag_motion(event):
         nonlocal drag_start_x, drag_start_y
@@ -308,11 +309,11 @@ def create_gui(root, app, set_app):
 
     def on_drag_end(event):
         # Reset the cursor when drag ends (when mouse button is released)
-        event.widget.config(cursor="@res/gui/handNoGrab.cur")  # Reset cursor to 'handNoGrab.cur'
+        event.widget.config(cursor="@" + resource_path("res/gui/handNoGrab.cur"))  # Reset cursor to 'handNoGrab.cur'
 
 
     def window_close_on_enter_hover(e):
-        e.widget.config(cursor="@res/gui/handNoGrab.cur")  # Change to red
+        e.widget.config(cursor="@" + resource_path("res/gui/handNoGrab.cur"))  # Change to red
 
     def window_close_on_leave_hover(e):
         e.widget.config(cursor="arrow")  # Change to red
@@ -339,7 +340,7 @@ def create_gui(root, app, set_app):
         # Hover effect for close button
         def close_on_enter_hover(e):
             close_button_canvas.itemconfig(close_circle_id, fill="#ff0000")
-            e.widget.config(cursor="@res/gui/skull.cur")  # Change to red
+            e.widget.config(cursor="@" + resource_path("res/gui/skull.cur"))  # Change to red
 
         def close_on_leave_hover(e):
             close_button_canvas.itemconfig(close_circle_id, fill="#4a4a4a")  # Change back to gray
@@ -380,10 +381,10 @@ def create_gui(root, app, set_app):
             if object_name == "device":
                 # Use a var to keep track of current image path
                 if root.device_image_path == "res/devices/trimuibrick.png":
-                    root.device_image = tk.PhotoImage(file="res/devices/miyooa30.png")
+                    root.device_image = tk.PhotoImage(file=resource_path("res/devices/miyooa30.png"))
                     root.device_image_path = "res/devices/miyooa30.png"
                 elif root.device_image_path == "res/devices/miyooa30.png":
-                    root.device_image = tk.PhotoImage(file="res/devices/trimuibrick.png")
+                    root.device_image = tk.PhotoImage(file=resource_path("res/devices/trimuibrick.png"))
                     root.device_image_path = "res/devices/trimuibrick.png"
                 e.widget.config(image=root.device_image)
 
