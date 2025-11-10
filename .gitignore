@@ -4,3 +4,8 @@ __pycache__/
 .zed
 None
 disk2s1
+
+build/*
+dist/*
+
+.venv/*
