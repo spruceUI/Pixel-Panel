@@ -45,3 +45,4 @@ res/            # Resources (icons, cursors, etc.)
 ```bash
 ./build-scripts/package.sh
 ```
+git bash test
